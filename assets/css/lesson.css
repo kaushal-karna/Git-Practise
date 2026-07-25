@@ -1,0 +1,272 @@
+/* ======================================================
+   git.learn — lesson stylesheet
+   Matches global design system
+   ====================================================== */
+
+.lesson-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Lesson Title */
+#lesson-title {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+}
+
+/* Section Headings */
+main section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: .75rem;
+  color: var(--text);
+  border-left: 4px solid var(--primary);
+  padding-left: .6rem;
+}
+
+/* Collapsible Sections */
+.lesson-section {
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.section-toggle {
+  width: 100%;
+  background: var(--card);
+  color: var(--text);
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  border: none;
+  transition: background .2s ease;
+}
+.section-toggle.open {
+  background: var(--primary);
+  color: #fff;
+}
+.section-content {
+  display: none;
+  padding: 1rem;
+  background: var(--card-hover);
+}
+
+/* Theory & Examples */
+#lesson-theory,
+#lesson-examples p {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+/* Commands */
+#lesson-commands pre {
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: .75rem 1rem;
+  font-family: var(--font-mono);
+  font-size: .92rem;
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+}
+#lesson-commands button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: .35rem .7rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: .8rem;
+  transition: background .2s ease, transform .2s ease;
+}
+#lesson-commands button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* Notes */
+#lesson-notes {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-top: .5rem;
+}
+#lesson-notes li {
+  margin-bottom: .5rem;
+  color: var(--text-secondary);
+}
+
+/* Navigation Buttons */
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+.lesson-nav button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: .7rem 1.4rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background .2s ease, transform .2s ease;
+}
+.lesson-nav button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* Navbar */
+header {
+  background: var(--primary);
+  color: #fff;
+  padding: 1rem 1.5rem;
+}
+header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+.navbar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: .5rem;
+}
+.navbar a, .navbar button {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.navbar button {
+  padding: .4rem .8rem;
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--text);
+}
+
+/* Dropdown Lessons Menu */
+#lessonMenu {
+  display: none;
+  position: absolute;
+  top: 4rem;
+  background: var(--card);
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  list-style: none;
+  padding: .5rem 0;
+  z-index: 1000;
+}
+#lessonMenu li a {
+  display: block;
+  padding: .6rem 1rem;
+  text-decoration: none;
+  color: var(--text);
+}
+#lessonMenu li a:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Progress Bar */
+#progressWrapper {
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-top: 2rem;
+  height: 20px;
+  overflow: hidden;
+}
+#progressBar {
+  background: var(--primary);
+  height: 100%;
+  width: 0;
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 20px;
+  transition: width .3s ease;
+}
+
+/* README Rendering */
+#lesson-readme {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  line-height: 1.7;
+}
+#lesson-readme h1, #lesson-readme h2, #lesson-readme h3 {
+  color: var(--primary);
+  margin-top: 1.2rem;
+}
+#lesson-readme code {
+  background: var(--bg-2);
+  padding: .2rem .4rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+}
+#lesson-readme pre {
+  background: var(--card-hover);
+  padding: 1rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+#lesson-readme ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: .6rem 1rem;
+  color: var(--text);
+  font-size: .85rem;
+  box-shadow: var(--shadow-lg);
+  animation: fadeInOut 2s ease forwards;
+}
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(12px); }
+  10% { opacity: 1; transform: none; }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(12px); }
+}
+
+/* Reveal Animation */
+.reveal { opacity:0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity:1; transform:none; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #lessonMenu {
+    position: static;
+    box-shadow: none;
+    width: 100%;
+  }
+}

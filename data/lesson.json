@@ -1,0 +1,104 @@
+{
+  "01": {
+    "title": "Installing Git & Init Basics",
+    "theory": "Learn how to install Git, configure user identity, and initialize repositories. Understand the hidden .git folder and file states.",
+    "commands": [
+      "git --version",
+      "git config --global user.name \"Your Name\"",
+      "git config --global user.email \"you@example.com\"",
+      "git init",
+      "git status"
+    ],
+    "examples": ["Install Git on your OS", "Initialize a repo and check status"],
+    "notes": ["Config can be local, global, or system", "Deleting .git removes history but not files"],
+    "readme": "../lesson-01-init/README.md"
+  },
+  "02": {
+    "title": "Making Commits",
+    "theory": "Commits are snapshots of your project history. They record staged changes with a message and form the backbone of Git history.",
+    "commands": ["git add .", "git commit -m \"Initial commit\"", "git log"],
+    "examples": ["Stage all files and commit", "View commit history"],
+    "notes": ["Write meaningful commit messages", "Commits are immutable history entries"],
+    "readme": "../lesson-02-commits/README.md"
+  },
+  "03": {
+    "title": "Branching",
+    "theory": "Branches allow parallel development. Each branch is a pointer to a commit, enabling experimentation without affecting main.",
+    "commands": ["git branch feature-x", "git checkout feature-x", "git switch -c new-branch"],
+    "examples": ["Create and switch to a new branch"],
+    "notes": ["Keep branch names descriptive", "Use branches for features or fixes"],
+    "readme": "../lesson-03-branches/README.md"
+  },
+  "04": {
+    "title": "HEAD & References",
+    "theory": "HEAD is a pointer to your current branch or commit. Learn how Git uses references to track branches and commits.",
+    "commands": ["git rev-parse HEAD", "git symbolic-ref HEAD"],
+    "examples": ["View current commit hash", "Inspect HEAD reference"],
+    "notes": ["HEAD usually points to the latest commit on the current branch"],
+    "readme": "../lesson-04-head/README.md"
+  },
+  "05": {
+    "title": "Reset & Revert",
+    "theory": "Reset moves HEAD to a different commit, optionally changing the index and working directory. Revert creates a new commit that undoes changes.",
+    "commands": ["git reset --hard HEAD~1", "git revert <commit>"],
+    "examples": ["Undo last commit with reset", "Revert a buggy commit"],
+    "notes": ["Reset can discard work", "Revert is safer for shared repos"],
+    "readme": "../lesson-05-revert/README.md"
+  },
+  "06": {
+    "title": "Rebase",
+    "theory": "Rebase rewrites commit history to create a linear timeline. Useful for keeping feature branches up to date.",
+    "commands": ["git rebase main"],
+    "examples": ["Rebase feature branch onto main"],
+    "notes": ["Rebase avoids merge commits", "Use carefully to avoid rewriting shared history"],
+    "readme": "../lesson-06-rebase/README.md"
+  },
+  "07": {
+    "title": "Merging",
+    "theory": "Merge integrates changes from one branch into another. Understand fast-forward vs. recursive merges and conflict resolution.",
+    "commands": ["git merge feature-x"],
+    "examples": ["Merge feature branch into main"],
+    "notes": ["Resolve conflicts carefully", "Merges preserve history"],
+    "readme": "../lesson-07-merge/README.md"
+  },
+  "08": {
+    "title": "Reset (Advanced)",
+    "theory": "Learn advanced reset options: soft, mixed, and hard. Understand how they affect the staging area and working directory.",
+    "commands": ["git reset --soft HEAD~1", "git reset --mixed HEAD~1", "git reset --hard HEAD~1"],
+    "examples": ["Undo commits but keep changes staged", "Undo commits and unstage changes"],
+    "notes": ["Soft keeps changes staged", "Hard discards changes completely"],
+    "readme": "../lesson-08-reset/README.md"
+  },
+  "09": {
+    "title": "Cherry-pick",
+    "theory": "Cherry-pick applies a specific commit from one branch onto another. Useful for hotfixes.",
+    "commands": ["git cherry-pick <commit-hash>"],
+    "examples": ["Apply a bug fix commit onto main"],
+    "notes": ["Avoid duplicate commits", "Great for selective changes"],
+    "readme": "../lesson-09-cherry-pick/README.md"
+  },
+  "10": {
+    "title": "Working with Remotes",
+    "theory": "Remotes connect your local repo to servers like GitHub. Learn push, pull, and fetch operations.",
+    "commands": ["git remote add origin <url>", "git push origin main", "git pull origin main"],
+    "examples": ["Link repo to GitHub", "Push commits to remote"],
+    "notes": ["Use 'origin' as default remote name", "Always pull before pushing"],
+    "readme": "../lesson-10-remotes/README.md"
+  },
+  "11": {
+    "title": "Visualization & Debugging",
+    "theory": "Use tools like git log, gitk, and visualization commands to understand history. Learn bisect for debugging.",
+    "commands": ["git log --oneline --graph", "git bisect start"],
+    "examples": ["Visualize commit graph", "Find buggy commit with bisect"],
+    "notes": ["Graph view helps comprehension", "Bisect automates bug hunting"],
+    "readme": "../lesson-11-visualizer/README.md"
+  },
+  "12": {
+    "title": "GitHub Workflow",
+    "theory": "A typical GitHub workflow involves branching, committing, pushing, and creating pull requests. Learn collaboration patterns.",
+    "commands": ["git checkout -b feature", "git push origin feature"],
+    "examples": ["Create a feature branch and push it to GitHub"],
+    "notes": ["Always open a pull request for review", "Use Actions for CI/CD"],
+    "readme": "../lesson-12-github-workflow/README.md"
+  }
+}

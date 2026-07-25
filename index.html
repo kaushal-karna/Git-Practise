@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git & GitHub — The Complete Beginner to Advanced Course</title>
+<meta name="description" content="Learn Git and GitHub with 12 hands-on lessons, real workflows, cheat sheets and interview prep. 100% free.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo">
+      <span class="logo-mark"><i class="fa-solid fa-code-branch"></i></span>
+      <span class="logo-text">git<span class="logo-accent">.learn</span></span>
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#top" class="nav-link active" data-nav>Home</a>
+      <a href="lessons/lesson.html" class="nav-link" data-nav>Lessons</a>
+      <a href="#practice" class="nav-link" data-nav>Practice</a>
+      <a href="comming-soon.html" class="nav-link" data-nav>Resources</a>
+      <a href="https://github.com/kaushal-karna" target="_blank" rel="noopener" class="nav-link nav-github">
+        <i class="fa-brands fa-github"></i> GitHub
+      </a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="search-toggle" id="searchToggle" aria-label="Search lessons">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark and light mode">
+        <i class="fa-solid fa-moon" id="themeIcon"></i>
+      </button>
+      <button class="nav-burger" id="navBurger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Search panel -->
+  <div class="search-panel" id="searchPanel">
+    <div class="search-panel-inner">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" id="searchInput" placeholder="Search lessons — try &quot;rebase&quot; or &quot;commit&quot;" autocomplete="off">
+      <span class="search-hint" id="searchHint"></span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="dot"></span> 12 lessons · 100% free · no signup</p>
+      <h1 class="hero-title">
+        Master <span class="grad">Git</span> &amp;
+        <span class="grad">GitHub</span>
+      </h1>
+      <p class="hero-sub">The complete beginner → advanced course. Learn version
+        control through practical exercises, real workflows, and the exact
+        commands used on real engineering teams.</p>
+
+      <div class="hero-ctas">
+        <a href="lessons/lesson.html" class="btn btn-primary">
+          <i class="fa-solid fa-rocket"></i> Start Learning
+        </a>
+        <a href="https://github.com/" target="_blank" rel="noopener" class="btn btn-ghost">
+          <i class="fa-regular fa-star"></i> GitHub Repository
+        </a>
+      </div>
+
+      <p class="hero-meta"><i class="fa-regular fa-clock"></i> ~14 hours of content &nbsp;•&nbsp; self-paced</p>
+    </div>
+
+    <div class="hero-terminal" aria-hidden="true">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+          <span class="terminal-title">kaushal@git-learn: ~/project</span>
+        </div>
+        <div class="terminal-body" id="terminalBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <a href="#stats" class="scroll-cue" aria-label="Scroll down">
+    <i class="fa-solid fa-chevron-down"></i>
+  </a>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats" id="stats">
+  <div class="stats-inner">
+    <div class="stat-card reveal">
+      <span class="stat-num" data-count="12">0</span><span class="stat-plus">+</span>
+      <span class="stat-label">Lessons</span>
+    </div>
+    <div class="stat-card reveal">
+      <span class="stat-num" data-count="100">0</span><span class="stat-plus">+</span>
+      <span class="stat-label">Commands</span>
+    </div>
+    <div class="stat-card reveal">
+      <span class="stat-num" data-count="50">0</span><span class="stat-plus">+</span>
+      <span class="stat-label">Exercises</span>
+    </div>
+    <div class="stat-card reveal">
+      <span class="stat-num" data-count="100">0</span><span class="stat-plus">%</span>
+      <span class="stat-label">Free</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section class="section" id="roadmap">
+  <div class="section-inner">
+    <p class="section-eyebrow">01 — The path</p>
+    <h2 class="section-title">Your learning roadmap</h2>
+    <p class="section-sub">Three stages, twelve lessons, one straight line from
+      <code>git init</code> to a full GitHub Actions workflow.</p>
+
+    <div class="roadmap-track">
+      <div class="roadmap-line"></div>
+
+      <div class="roadmap-stage reveal">
+        <div class="stage-head">
+          <span class="stage-dot beginner"></span>
+          <h3>Beginner</h3>
+        </div>
+        <ul class="stage-list">
+          <li><span>01</span> Introduction to Git</li>
+          <li><span>02</span> Installing Git</li>
+          <li><span>03</span> Git Init</li>
+          <li><span>04</span> Making Commits</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-stage reveal">
+        <div class="stage-head">
+          <span class="stage-dot intermediate"></span>
+          <h3>Intermediate</h3>
+        </div>
+        <ul class="stage-list">
+          <li><span>05</span> Branching</li>
+          <li><span>06</span> Merging</li>
+          <li><span>07</span> Working with Remotes</li>
+          <li><span>08</span> GitHub Basics</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-stage reveal">
+        <div class="stage-head">
+          <span class="stage-dot advanced"></span>
+          <h3>Advanced</h3>
+        </div>
+        <ul class="stage-list">
+          <li><span>09</span> Rebase</li>
+          <li><span>10</span> Cherry-pick</li>
+          <li><span>11</span> Git Internals</li>
+          <li><span>12</span> GitHub Workflow</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="features">
+  <div class="features-inner">
+    <div class="feature-pill reveal"><i class="fa-solid fa-book"></i> Theory</div>
+    <div class="feature-pill reveal"><i class="fa-solid fa-lightbulb"></i> Examples</div>
+    <div class="feature-pill reveal"><i class="fa-solid fa-terminal"></i> Commands</div>
+    <div class="feature-pill reveal"><i class="fa-solid fa-dumbbell"></i> Exercises</div>
+    <div class="feature-pill reveal"><i class="fa-solid fa-code-compare"></i> Practice</div>
+    <div class="feature-pill reveal"><i class="fa-solid fa-file-lines"></i> Cheat Sheets</div>
+  </div>
+</section>
+
+<!-- ============ LESSONS ============ -->
+<section class="section" id="lessons">
+  <div class="section-inner">
+    <p class="section-eyebrow">02 — The lessons</p>
+    <h2 class="section-title">All 12 lessons</h2>
+    <p class="section-sub">Every lesson pairs a short explanation with real
+      commands to run yourself. Use the filters to jump to a level.</p>
+
+    <div class="lesson-filters" id="lessonFilters">
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="beginner">Beginner</button>
+      <button class="filter-chip" data-filter="intermediate">Intermediate</button>
+      <button class="filter-chip" data-filter="advanced">Advanced</button>
+    </div>
+
+    <div class="lesson-grid" id="lessonGrid">
+      <!-- injected by script.js -->
+    </div>
+
+    <p class="no-results" id="noResults" hidden>No lessons match your search. Try a different term.</p>
+  </div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section class="section section-alt" id="practice">
+  <div class="section-inner">
+    <p class="section-eyebrow">03 — Learn by doing</p>
+    <h2 class="section-title">Practice on real repositories</h2>
+    <p class="section-sub">Reading about <code>git rebase</code> doesn't teach
+      you <code>git rebase</code>. This does.</p>
+
+    <div class="practice-timeline">
+      <div class="practice-step reveal">
+        <div class="practice-icon"><i class="fa-solid fa-download"></i></div>
+        <h3>Clone the repository</h3>
+        <p>Pull the course repo down to your machine and open it in your editor.</p>
+        <code>git clone https://github.com/kaushalkarn/git-learn.git</code>
+      </div>
+      <div class="practice-step reveal">
+        <div class="practice-icon"><i class="fa-solid fa-folder-open"></i></div>
+        <h3>Open the lesson folder</h3>
+        <p>Each lesson has its own folder with a task file and a starter repo.</p>
+        <code>cd lessons/06-merging</code>
+      </div>
+      <div class="practice-step reveal">
+        <div class="practice-icon"><i class="fa-solid fa-list-check"></i></div>
+        <h3>Complete the exercise</h3>
+        <p>Follow the prompt inside <code>TASK.md</code> and run the commands yourself.</p>
+        <code>git status</code>
+      </div>
+      <div class="practice-step reveal">
+        <div class="practice-icon"><i class="fa-solid fa-code-compare"></i></div>
+        <h3>Compare your solution</h3>
+        <p>Check your work against <code>SOLUTION.md</code> and see where you diverged.</p>
+        <code>git diff solution</code>
+      </div>
+      <div class="practice-step reveal practice-final">
+        <div class="practice-icon"><i class="fa-solid fa-trophy"></i></div>
+        <h3>Master it</h3>
+        <p>Repeat with the next lesson until the commands feel like muscle memory.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESOURCES ============ -->
+<section class="section" id="resources">
+  <div class="section-inner">
+    <p class="section-eyebrow">04 — Keep nearby</p>
+    <h2 class="section-title">Resources</h2>
+    <p class="section-sub">Reference material for while you're actually working, not just while you're studying.</p>
+
+    <div class="resource-grid">
+      <a href="#" class="resource-card reveal">
+        <i class="fa-solid fa-file-lines"></i>
+        <h3>Git Cheat Sheet</h3>
+        <p>Every command from this course on one page.</p>
+      </a>
+      <a href="#" class="resource-card reveal">
+        <i class="fa-solid fa-eye-slash"></i>
+        <h3>Git Ignore Guide</h3>
+        <p>Stop committing <code>node_modules</code> forever.</p>
+      </a>
+      <a href="#" class="resource-card reveal">
+        <i class="fa-solid fa-comments"></i>
+        <h3>Interview Questions</h3>
+        <p>The Git questions that actually come up in interviews.</p>
+      </a>
+      <a href="#" class="resource-card reveal">
+        <i class="fa-solid fa-code-branch"></i>
+        <h3>Git Flow</h3>
+        <p>Branching models for real team projects.</p>
+      </a>
+      <a href="#" class="resource-card reveal">
+        <i class="fa-brands fa-github"></i>
+        <h3>GitHub Actions</h3>
+        <p>Automate tests and deploys straight from your repo.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-mark"><i class="fa-solid fa-code-branch"></i></span>
+      <span class="logo-text">git<span class="logo-accent">.learn</span></span>
+      <p>Git &amp; GitHub Learning Platform — made with <i class="fa-solid fa-heart"></i> by Kaushal Karn.</p>
+    </div>
+
+    <div class="footer-links">
+      <a href="https://github.com/kaushal-karna" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="www.linkedin.com/in/kaushal-karn-03694b304" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+      <a href="https://opensource.org/license/mit"><i class="fa-solid fa-scale-balanced"></i> MIT License</a>
+    </div>
+  </div>
+  <p class="footer-bottom">© <span id="year"></span> git.learn — Built for anyone who's ever typed <code>git push --force</code> and regretted it.</p>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>

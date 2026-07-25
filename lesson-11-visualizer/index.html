@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git Graph — Interactive Visualizer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+  :root{
+    --bg:            #0b0e12;
+    --panel:         #12161d;
+    --panel-2:       #171c25;
+    --line:          #232a36;
+    --text:          #e7ebf1;
+    --text-dim:      #7d8898;
+    --accent:        #f2622e;   /* git-orange */
+    --accent-dim:    #f2622e33;
+    --ok:            #4fd58a;
+    --c1: #f2622e; --c2: #5da8ff; --c3: #b98cff; --c4: #4fd58a; --c5: #ffd166; --c6: #ff6b9d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'JetBrains Mono', monospace;
+    min-height:100vh;
+  }
+  .wrap{ max-width:1180px; margin:0 auto; padding:28px 20px 60px; }
+  header{ margin-bottom:22px; }
+  header h1{
+    font-family:'Space Grotesk', sans-serif; font-size:28px; font-weight:700; margin:0 0 4px;
+    letter-spacing:-0.02em;
+  }
+  header h1 span{ color:var(--accent); }
+  header p{ color:var(--text-dim); margin:0; font-size:13.5px; }
+
+  .layout{ display:grid; grid-template-columns: 380px 1fr; gap:16px; margin-top:20px; }
+  @media (max-width: 860px){ .layout{ grid-template-columns: 1fr; } }
+
+  .panel{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:16px; display:flex; flex-direction:column;
+  }
+  .panel h2{
+    font-family:'Space Grotesk', sans-serif; font-size:13px; text-transform:uppercase;
+    letter-spacing:0.08em; color:var(--text-dim); margin:0 0 12px;
+  }
+
+  #console-log{
+    flex:1; min-height:260px; max-height:320px; overflow-y:auto;
+    background:var(--bg); border:1px solid var(--line); border-radius:8px;
+    padding:12px; font-size:12.5px; line-height:1.6;
+  }
+  #console-log .row{ margin-bottom:6px; white-space:pre-wrap; word-break:break-word; }
+  #console-log .cmd{ color:var(--accent); }
+  #console-log .cmd::before{ content:"$ "; color:var(--text-dim); }
+  #console-log .out{ color:var(--text-dim); }
+  #console-log .err{ color:#ff6b6b; }
+  #console-log .ok{ color:var(--ok); }
+
+  form{ display:flex; gap:8px; margin-top:10px; }
+  #cmd-input{
+    flex:1; background:var(--panel-2); border:1px solid var(--line); color:var(--text);
+    padding:10px 12px; border-radius:8px; font-family:inherit; font-size:13px; outline:none;
+  }
+  #cmd-input:focus{ border-color:var(--accent); }
+  button{
+    background:var(--accent); color:#12161d; border:none; border-radius:8px;
+    padding:10px 16px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px;
+    cursor:pointer;
+  }
+  button.secondary{ background:var(--panel-2); color:var(--text); border:1px solid var(--line); }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .chip{
+    background:var(--panel-2); border:1px solid var(--line); color:var(--text-dim);
+    padding:5px 9px; border-radius:20px; font-size:11px; cursor:pointer;
+  }
+  .chip:hover{ border-color:var(--accent); color:var(--text); }
+
+  #graph-panel{ min-height:520px; }
+  #graph{ width:100%; flex:1; min-height:420px; }
+
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; font-size:11px; color:var(--text-dim); }
+  .legend .dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px; }
+
+  .status-bar{
+    display:flex; gap:18px; margin-top:14px; padding-top:14px; border-top:1px dashed var(--line);
+    font-size:12px; color:var(--text-dim); flex-wrap:wrap;
+  }
+  .status-bar b{ color:var(--text); }
+
+  footer{ text-align:center; color:var(--text-dim); font-size:11.5px; margin-top:30px; }
+  footer a{ color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Git<span>Graph</span> — Interactive Visualizer</h1>
+    <p>Type real Git commands below and watch the commit graph build itself, live. Part of the <strong>Git-Practice</strong> learning path.</p>
+  </header>
+
+  <div class="layout">
+    <div class="panel">
+      <h2>Terminal</h2>
+      <div id="console-log"></div>
+      <form id="cmd-form">
+        <input id="cmd-input" autocomplete="off" placeholder="git init" autofocus />
+        <button type="submit">Run</button>
+      </form>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="panel" id="graph-panel">
+      <h2>Commit Graph</h2>
+      <svg id="graph" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="legend" id="legend"></div>
+      <div class="status-bar">
+        <div>HEAD → <b id="head-branch">—</b></div>
+        <div>Branches: <b id="branch-count">0</b></div>
+        <div>Commits: <b id="commit-count">0</b></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Built for <strong>Git-Practice</strong> · a free, open Git course. Run <code>git help</code> in the terminal above for the supported command list.
+    <br>Not a real git backend — a teaching simulation of the object graph. Use a real terminal for actual repos.
+  </footer>
+</div>
+
+<script>
+(function(){
+  const LANE_COLORS = ["c1","c2","c3","c4","c5","c6"].map(v=>getComputedStyle(document.documentElement).getPropertyValue('--'+v).trim());
+
+  let commits = {};      // id -> {id, parent, parent2, message, branch, x, y}
+  let branches = {};     // name -> commitId
+  let branchColor = {};  // name -> color
+  let HEAD = null;       // branch name or {detached: commitId}
+  let commitCounter = 0;
+  let laneCounter = 0;
+  let initialized = false;
+
+  const logEl = document.getElementById('console-log');
+  const form = document.getElementById('cmd-form');
+  const input = document.getElementById('cmd-input');
+  const chipsEl = document.getElementById('chips');
+
+  function logRow(text, cls){
+    const d = document.createElement('div');
+    d.className = 'row ' + (cls||'');
+    d.textContent = text;
+    logEl.appendChild(d);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+  function logCmd(text){ logRow(text, 'cmd'); }
+  function logOut(text){ logRow(text, 'out'); }
+  function logErr(text){ logRow(text, 'err'); }
+  function logOk(text){ logRow(text, 'ok'); }
+
+  function newHash(){
+    commitCounter++;
+    return commitCounter.toString(16).padStart(4,'0');
+  }
+
+  function currentCommit(){
+    if (typeof HEAD === 'object') return HEAD.detached;
+    return branches[HEAD];
+  }
+
+  function makeCommit(message, parent2){
+    const id = newHash();
+    const parent = currentCommit();
+    const branchName = (typeof HEAD === 'object') ? null : HEAD;
+    commits[id] = { id, parent, parent2: parent2||null, message, branch: branchName };
+    if (typeof HEAD === 'object') { HEAD.detached = id; }
+    else { branches[HEAD] = id; }
+    return id;
+  }
+
+  function ensureColor(branchName){
+    if (!branchColor[branchName]){
+      branchColor[branchName] = LANE_COLORS[laneCounter % LANE_COLORS.length];
+      laneCounter++;
+    }
+  }
+
+  function ancestors(id){
+    const set = new Set();
+    (function walk(cid){
+      if (!cid || set.has(cid)) return;
+      set.add(cid);
+      const c = commits[cid];
+      if (c.parent) walk(c.parent);
+      if (c.parent2) walk(c.parent2);
+    })(id);
+    return set;
+  }
+
+  function isAncestor(a, b){ // is a an ancestor of b?
+    return ancestors(b).has(a);
+  }
+
+  function run(raw){
+    const line = raw.trim();
+    if (!line) return;
+    logCmd(line);
+    const parts = line.replace(/^git\s+/,'').split(/\s+/);
+    const cmd = parts[0];
+    const args = parts.slice(1);
+
+    try{
+      switch(cmd){
+        case 'init': doInit(); break;
+        case 'commit': doCommit(args); break;
+        case 'branch': doBranch(args); break;
+        case 'checkout': doCheckout(args); break;
+        case 'switch': doSwitch(args); break;
+        case 'merge': doMerge(args); break;
+        case 'log': doLog(); break;
+        case 'status': doStatus(); break;
+        case 'help': doHelp(); break;
+        case 'clear': logEl.innerHTML=''; break;
+        default:
+          logErr(`git: '${cmd}' is not recognized by this simulator. Try: git help`);
+      }
+    }catch(e){
+      logErr('error: ' + e.message);
+    }
+    render();
+  }
+
+  function requireInit(){
+    if (!initialized) throw new Error('not a git repository — run "git init" first');
+  }
+
+  function doInit(){
+    if (initialized){ logOut('Reinitialized existing Git repository'); return; }
+    initialized = true;
+    HEAD = 'main';
+    branches['main'] = null;
+    ensureColor('main');
+    logOk('Initialized empty Git repository');
+  }
+
+  function doCommit(args){
+    requireInit();
+    const mIdx = args.indexOf('-m');
+    const message = mIdx >= 0 ? args.slice(mIdx+1).join(' ').replace(/^["']|["']$/g,'') : 'commit';
+    if (typeof HEAD === 'object'){
+      const id = makeCommit(message);
+      logOk(`[detached HEAD ${id}] ${message}`);
+      return;
+    }
+    ensureColor(HEAD);
+    const id = makeCommit(message);
+    logOk(`[${HEAD} ${id}] ${message}`);
+  }
+
+  function doBranch(args){
+    requireInit();
+    if (args.length === 0){
+      Object.keys(branches).forEach(b=>{
+        logOut((b===HEAD?'* ':'  ') + b);
+      });
+      return;
+    }
+    const name = args[0];
+    if (branches[name]) throw new Error(`branch '${name}' already exists`);
+    branches[name] = currentCommit();
+    ensureColor(name);
+    logOk(`Created branch '${name}'`);
+  }
+
+  function doSwitch(args){
+    let name = args[0];
+    let create = false;
+    if (name === '-c'){ create = true; name = args[1]; }
+    if (create) doBranch([name]);
+    requireInit();
+    if (!branches.hasOwnProperty(name)) throw new Error(`branch '${name}' does not exist. Use: git switch -c ${name}`);
+    HEAD = name;
+    logOk(`Switched to branch '${name}'`);
+  }
+
+  function doCheckout(args){
+    requireInit();
+    if (args[0] === '-b'){ return doSwitch(['-c', args[1]]); }
+    const target = args[0];
+    if (branches.hasOwnProperty(target)){
+      HEAD = target;
+      logOk(`Switched to branch '${target}'`);
+      return;
+    }
+    if (commits[target] || Object.values(commits).some(c=>c.id.startsWith(target))){
+      const full = commits[target] ? target : Object.values(commits).find(c=>c.id.startsWith(target)).id;
+      HEAD = { detached: full };
+      logOut(`Note: switching to '${target}'.`);
+      logOut('You are in detached HEAD state.');
+      return;
+    }
+    throw new Error(`pathspec '${target}' did not match any branch or commit`);
+  }
+
+  function doMerge(args){
+    requireInit();
+    if (typeof HEAD === 'object') throw new Error('cannot merge while in detached HEAD');
+    const other = args[0];
+    if (!branches.hasOwnProperty(other)) throw new Error(`branch '${other}' does not exist`);
+    const ours = branches[HEAD];
+    const theirs = branches[other];
+    if (!theirs) throw new Error(`branch '${other}' has no commits`);
+    if (!ours){ branches[HEAD] = theirs; logOk(`Fast-forward merge: ${HEAD} -> ${other}`); return; }
+    if (isAncestor(theirs, ours)){ logOut('Already up to date.'); return; }
+    if (isAncestor(ours, theirs)){
+      branches[HEAD] = theirs;
+      logOk(`Fast-forward merge: ${HEAD} now matches ${other}`);
+      return;
+    }
+    // 3-way merge commit
+    const id = makeCommit(`Merge branch '${other}' into ${HEAD}`, theirs);
+    logOk(`Created merge commit ${id}`);
+  }
+
+  function doLog(){
+    requireInit();
+    let id = currentCommit();
+    if (!id){ logOut('(no commits yet)'); return; }
+    const seen = new Set();
+    const order = [];
+    (function walk(cid){
+      if (!cid || seen.has(cid)) return;
+      seen.add(cid); order.push(cid);
+      const c = commits[cid];
+      if (c.parent) walk(c.parent);
+    })(id);
+    order.forEach(cid=>{
+      const c = commits[cid];
+      logOut(`${c.id}  ${c.message}`);
+    });
+  }
+
+  function doStatus(){
+    requireInit();
+    const branchLabel = typeof HEAD === 'object' ? `HEAD detached at ${HEAD.detached}` : `On branch ${HEAD}`;
+    logOut(branchLabel);
+    logOut('nothing to commit, working tree clean (simulated)');
+  }
+
+  function doHelp(){
+    [
+      'git init',
+      'git commit -m "message"',
+      'git branch [name]',
+      'git switch [-c] <name>',
+      'git checkout [-b] <name-or-hash>',
+      'git merge <branch>',
+      'git log',
+      'git status',
+      'git clear   (clears this terminal)'
+    ].forEach(l=>logOut(l));
+  }
+
+  // ---------- Rendering ----------
+  function render(){
+    document.getElementById('head-branch').textContent = typeof HEAD==='object' ? `detached@${HEAD.detached}` : (HEAD||'—');
+    document.getElementById('branch-count').textContent = Object.keys(branches).length;
+    document.getElementById('commit-count').textContent = Object.keys(commits).length;
+
+    const svg = document.getElementById('graph');
+    svg.innerHTML = '';
+    const allIds = Object.keys(commits);
+    if (allIds.length === 0){
+      svg.innerHTML = `<text x="400" y="210" fill="#7d8898" font-size="14" text-anchor="middle" font-family="JetBrains Mono, monospace">Run "git init" then "git commit -m ..." to begin</text>`;
+      renderLegend();
+      return;
+    }
+
+    // topological order by walking commit chain (simple: order by counter/hash)
+    const ordered = allIds.slice().sort((a,b)=> parseInt(a,16)-parseInt(b,16));
+    const laneOf = {};
+    let laneAssign = 0;
+    const branchLane = {};
+    ordered.forEach(id=>{
+      const c = commits[id];
+      const b = c.branch || 'detached';
+      if (!(b in branchLane)){ branchLane[b] = laneAssign++; }
+      laneOf[id] = branchLane[b];
+    });
+
+    const xGap = 90, xStart = 60, yGap = 60, yStart = 40;
+    const pos = {};
+    ordered.forEach((id, i)=>{
+      pos[id] = { x: xStart + i*xGap, y: yStart + laneOf[id]*yGap };
+    });
+
+    const maxX = Math.max(...ordered.map(id=>pos[id].x)) + 80;
+    const maxY = Math.max(...ordered.map(id=>pos[id].y)) + 60;
+    svg.setAttribute('viewBox', `0 0 ${Math.max(800,maxX)} ${Math.max(300,maxY)}`);
+
+    // edges
+    ordered.forEach(id=>{
+      const c = commits[id];
+      [c.parent, c.parent2].forEach(pid=>{
+        if (!pid) return;
+        const a = pos[pid], bpos = pos[id];
+        const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+        const midX = (a.x + bpos.x)/2;
+        path.setAttribute('d', `M ${a.x} ${a.y} C ${midX} ${a.y}, ${midX} ${bpos.y}, ${bpos.x} ${bpos.y}`);
+        path.setAttribute('stroke', '#3a4353');
+        path.setAttribute('stroke-width', '2');
+        path.setAttribute('fill', 'none');
+        svg.appendChild(path);
+      });
+    });
+
+    // nodes
+    ordered.forEach(id=>{
+      const c = commits[id];
+      const p = pos[id];
+      const color = branchColor[c.branch] || '#7d8898';
+      const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+
+      const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      circle.setAttribute('cx', p.x); circle.setAttribute('cy', p.y); circle.setAttribute('r', 10);
+      circle.setAttribute('fill', '#0b0e12');
+      circle.setAttribute('stroke', color);
+      circle.setAttribute('stroke-width', '3');
+      g.appendChild(circle);
+
+      const hashText = document.createElementNS('http://www.w3.org/2000/svg','text');
+      hashText.setAttribute('x', p.x); hashText.setAttribute('y', p.y+28);
+      hashText.setAttribute('fill', '#7d8898'); hashText.setAttribute('font-size','10');
+      hashText.setAttribute('text-anchor','middle'); hashText.setAttribute('font-family',"JetBrains Mono, monospace");
+      hashText.textContent = id;
+      g.appendChild(hashText);
+
+      const msgText = document.createElementNS('http://www.w3.org/2000/svg','text');
+      msgText.setAttribute('x', p.x); msgText.setAttribute('y', p.y-16);
+      msgText.setAttribute('fill', '#e7ebf1'); msgText.setAttribute('font-size','10.5');
+      msgText.setAttribute('text-anchor','middle'); msgText.setAttribute('font-family',"JetBrains Mono, monospace");
+      const shortMsg = c.message.length > 16 ? c.message.slice(0,14)+'…' : c.message;
+      msgText.textContent = shortMsg;
+      g.appendChild(msgText);
+
+      svg.appendChild(g);
+    });
+
+    // branch tip labels
+    Object.entries(branches).forEach(([name, id])=>{
+      if (!id) return;
+      const p = pos[id];
+      const color = branchColor[name] || '#7d8898';
+      const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+      label.setAttribute('x', p.x); label.setAttribute('y', p.y - 30);
+      label.setAttribute('fill', color); label.setAttribute('font-size','10.5'); label.setAttribute('font-weight','700');
+      label.setAttribute('text-anchor','middle'); label.setAttribute('font-family',"'Space Grotesk', sans-serif");
+      label.textContent = (name===HEAD?'HEAD → ':'') + name;
+      svg.appendChild(label);
+    });
+
+    renderLegend();
+  }
+
+  function renderLegend(){
+    const legend = document.getElementById('legend');
+    legend.innerHTML = '';
+    Object.entries(branchColor).forEach(([name,color])=>{
+      const span = document.createElement('span');
+      span.innerHTML = `<span class="dot" style="background:${color}"></span>${name}`;
+      legend.appendChild(span);
+    });
+  }
+
+  // ---------- UI wiring ----------
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const v = input.value;
+    input.value = '';
+    run(v);
+  });
+
+  const quick = ['git init','git commit -m "first commit"','git branch feature','git switch feature','git commit -m "feature work"','git switch main','git merge feature','git log','git status','git help'];
+  quick.forEach(c=>{
+    const chip = document.createElement('div');
+    chip.className='chip'; chip.textContent=c;
+    chip.onclick = ()=>{ input.value = c; input.focus(); };
+    chipsEl.appendChild(chip);
+  });
+
+  logOut('Welcome! This is a simulated Git repo — type commands or click a chip below.');
+  logOut('Start with: git init');
+  render();
+})();
+</script>
+</body>
+</html>
