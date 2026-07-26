@@ -1,0 +1,28 @@
+{
+  "name": "Git Learning Platform",
+  "short_name": "GitLearn",
+  "description": "A complete Git & GitHub learning platform from beginner to advanced with interactive lessons and practice.",
+
+  "start_url": "/Git-Practise/",
+  "scope": "/Git-Practise/",
+
+  "display": "standalone",
+
+  "background_color": "#081C15",
+  "theme_color": "#0F3D2E",
+
+  "orientation": "portrait-primary",
+
+  "icons": [
+    {
+      "src": "assets/images/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

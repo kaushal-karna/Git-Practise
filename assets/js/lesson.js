@@ -149,12 +149,12 @@
 
     if (toggleBtn && menu) {
       toggleBtn.addEventListener("click", () => {
-        menu.style.display = menu.style.display === "block" ? "none" : "block";
+        menu.classList.toggle("show");
       });
 
       document.addEventListener("click", (e) => {
         if (!menu.contains(e.target) && e.target !== toggleBtn) {
-          menu.style.display = "none";
+          menu.classList.remove("show");
         }
       });
     }

@@ -1,76 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Git Lesson</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/lesson.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git Lesson</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/lesson.css" />
+    <link id="favicon" rel="icon" type="image/png" href="../assets/images/favicon-dark.png" />
+
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png" />
+
+    <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png" />
+
+    <link rel="manifest" href="../manifest.webmanifest">
+
+    <meta name="theme-color" content="#0F3D2E" />
 </head>
+
 <body>
- <header>
-  <h1>Git Learning Platform</h1>
-  <nav class="navbar">
-    <a href="../index.html">Home</a>
-    <button id="lessonMenuToggle">Lessons ▾</button>
-    <a href="../comming-soon.html">Resources</a>
-    <ul id="lessonMenu" class="lesson-menu">
-      <li><a href="lesson.html?id=01">Git Init</a></li>
-      <li><a href="lesson.html?id=02">Git Commit</a></li>
-      <li><a href="lesson.html?id=03">Git Branch</a></li>
-      <li><a href="lesson.html?id=04">Git Merge</a></li>
-      <li><a href="lesson.html?id=05">Git Rebase</a></li>
-      <li><a href="lesson.html?id=06">Git Remote</a></li>
-      <li><a href="lesson.html?id=07">GitHub Basics</a></li>
-      <li><a href="lesson.html?id=08">Pull Requests</a></li>
-      <li><a href="lesson.html?id=09">GitHub Actions</a></li>
-      <li><a href="lesson.html?id=10">Advanced Git</a></li>
-      <li><a href="lesson.html?id=11">Advanced Git</a></li>
-      <li><a href="lesson.html?id=12">Advanced Git</a></li>
-    </ul>
-  </nav>
-</header>
+    <header>
+        <h1>Git Learning Platform</h1>
+        <nav class="navbar">
+            <a href="../index.html">Home</a>
+            <button id="lessonMenuToggle">Lessons ▾</button>
+            <a href="../comming-soon.html">Resources</a>
+            <div id="lessonMenu" class="lesson-menu">
+                <a href="lesson.html?id=01" class="lesson-item">01. Git Init</a>
+                <a href="lesson.html?id=02" class="lesson-item">02. Git Commit</a>
+                <a href="lesson.html?id=03" class="lesson-item">03. Git Branch</a>
+                <a href="lesson.html?id=04" class="lesson-item">04. Git Merge</a>
+                <a href="lesson.html?id=05" class="lesson-item">05. Git Rebase</a>
+                <a href="lesson.html?id=06" class="lesson-item">06. Git Remote</a>
 
+                <a href="lesson.html?id=07" class="lesson-item">07. GitHub Basics</a>
+                <a href="lesson.html?id=08" class="lesson-item">08. Pull Requests</a>
+                <a href="lesson.html?id=09" class="lesson-item">09. GitHub Actions</a>
+                <a href="lesson.html?id=10" class="lesson-item">10. Advanced Git</a>
+                <a href="lesson.html?id=11" class="lesson-item">11. Git Internals</a>
+                <a href="lesson.html?id=12" class="lesson-item">12. GitHub Workflow</a>
+            </div>
+        </nav>
+    </header>
 
-  <main>
-    <h2 id="lesson-title"></h2>
-    <section class="lesson-section">
-  <button class="section-toggle">📖 Theory</button>
-  <div class="section-content" id="lesson-theory"></div>
-</section>
+    <main>
+        <h2 id="lesson-title"></h2>
+        <section class="lesson-section">
+            <button class="section-toggle">📖 Theory</button>
+            <div class="section-content" id="lesson-theory"></div>
+        </section>
 
-<section class="lesson-section">
-  <button class="section-toggle">💻 Commands</button>
-  <div class="section-content" id="lesson-commands"></div>
-</section>
+        <section class="lesson-section">
+            <button class="section-toggle">💻 Commands</button>
+            <div class="section-content" id="lesson-commands"></div>
+        </section>
 
-<section class="lesson-section">
-  <button class="section-toggle">🛠️ Examples</button>
-  <div class="section-content" id="lesson-examples"></div>
-</section>
+        <section class="lesson-section">
+            <button class="section-toggle">🛠️ Examples</button>
+            <div class="section-content" id="lesson-examples"></div>
+        </section>
 
-<section class="lesson-section">
-  <button class="section-toggle">📝 Notes</button>
-  <div class="section-content" id="lesson-notes"></div>
-</section>
+        <section class="lesson-section">
+            <button class="section-toggle">📝 Notes</button>
+            <div class="section-content" id="lesson-notes"></div>
+        </section>
 
-<section class="lesson-section">
-  <button class="section-toggle">📄 Lesson README</button>
-  <div class="section-content" id="lesson-readme"></div>
-</section>
+        <section class="lesson-section">
+            <button class="section-toggle">📄 Lesson README</button>
+            <div class="section-content" id="lesson-readme"></div>
+        </section>
 
-    <nav class="lesson-nav">
-      <button id="prev-btn">Previous</button>
-      <button id="next-btn">Next</button>
-    </nav>
-  </main>
+        <nav class="lesson-nav">
+            <button id="prev-btn">Previous</button>
+            <button id="next-btn">Next</button>
+        </nav>
+    </main>
 
-  <footer>
-    <p>© 2026 Git-Practise | Built for learners • Made with ❤️ by Kaushal Karn</p>
-  </footer>
+    <footer>
+        <p>
+            © 2026 Git-Practise | Built for learners • Made with ❤️ by Kaushal Karn
+        </p>
+    </footer>
 
-  <!-- Marked.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="../assets/js/lesson.js"></script>
+    <!-- Marked.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../assets/js/lesson.js"></script>
 </body>
+
 </html>

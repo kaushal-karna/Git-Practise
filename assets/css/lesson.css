@@ -21,10 +21,10 @@
 main section h3 {
   font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
   color: var(--text);
   border-left: 4px solid var(--primary);
-  padding-left: .6rem;
+  padding-left: 0.6rem;
 }
 
 /* Collapsible Sections */
@@ -43,7 +43,7 @@ main section h3 {
   text-align: left;
   cursor: pointer;
   border: none;
-  transition: background .2s ease;
+  transition: background 0.2s ease;
 }
 .section-toggle.open {
   background: var(--primary);
@@ -71,9 +71,9 @@ main section h3 {
   background: var(--card-hover);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: .75rem 1rem;
+  padding: 0.75rem 1rem;
   font-family: var(--font-mono);
-  font-size: .92rem;
+  font-size: 0.92rem;
   color: var(--blue);
   display: flex;
   align-items: center;
@@ -84,11 +84,13 @@ main section h3 {
   background: var(--primary);
   color: #fff;
   border: none;
-  padding: .35rem .7rem;
+  padding: 0.35rem 0.7rem;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: .8rem;
-  transition: background .2s ease, transform .2s ease;
+  font-size: 0.8rem;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 #lesson-commands button:hover {
   background: var(--primary-hover);
@@ -99,10 +101,10 @@ main section h3 {
 #lesson-notes {
   list-style: disc;
   padding-left: 1.5rem;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 #lesson-notes li {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   color: var(--text-secondary);
 }
 
@@ -116,11 +118,13 @@ main section h3 {
   background: var(--primary);
   color: #fff;
   border: none;
-  padding: .7rem 1.4rem;
+  padding: 0.7rem 1.4rem;
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 600;
-  transition: background .2s ease, transform .2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 .lesson-nav button:hover {
   background: var(--primary-hover);
@@ -141,9 +145,10 @@ header h1 {
   display: flex;
   gap: 1rem;
   align-items: center;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
-.navbar a, .navbar button {
+.navbar a,
+.navbar button {
   color: #fff;
   text-decoration: none;
   font-weight: 600;
@@ -152,33 +157,65 @@ header h1 {
   cursor: pointer;
 }
 .navbar button {
-  padding: .4rem .8rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 4px;
   background: var(--card);
   color: var(--text);
 }
 
 /* Dropdown Lessons Menu */
-#lessonMenu {
-  display: none;
+.lesson-menu {
   position: absolute;
-  top: 4rem;
-  background: var(--card);
-  border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  list-style: none;
-  padding: .5rem 0;
-  z-index: 1000;
+  top: 65px;
+  left: 0;
+
+  width: 700px;
+
+  display: none;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+
+  padding: 18px;
+
+  border-radius: 16px;
+
+  background: var(--card-bg);
+
+  border: 1px solid var(--border);
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+
+  z-index: 999;
 }
-#lessonMenu li a {
-  display: block;
-  padding: .6rem 1rem;
+
+.lesson-menu.show {
+  display: grid;
+}
+
+.lesson-item {
+  padding: 14px;
+
+  border-radius: 12px;
+
   text-decoration: none;
+
   color: var(--text);
+
+  background: var(--surface);
+
+  transition: 0.25s;
+
+  font-weight: 600;
 }
-#lessonMenu li a:hover {
+
+.lesson-item:hover {
   background: var(--primary);
+
   color: #fff;
+
+  transform: translateY(-3px);
 }
 
 /* Progress Bar */
@@ -195,11 +232,11 @@ header h1 {
   height: 100%;
   width: 0;
   color: #fff;
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-align: center;
   line-height: 20px;
-  transition: width .3s ease;
+  transition: width 0.3s ease;
 }
 
 /* README Rendering */
@@ -211,13 +248,15 @@ header h1 {
   margin-top: 1.5rem;
   line-height: 1.7;
 }
-#lesson-readme h1, #lesson-readme h2, #lesson-readme h3 {
+#lesson-readme h1,
+#lesson-readme h2,
+#lesson-readme h3 {
   color: var(--primary);
   margin-top: 1.2rem;
 }
 #lesson-readme code {
   background: var(--bg-2);
-  padding: .2rem .4rem;
+  padding: 0.2rem 0.4rem;
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
 }
@@ -241,22 +280,42 @@ header h1 {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: .6rem 1rem;
+  padding: 0.6rem 1rem;
   color: var(--text);
-  font-size: .85rem;
+  font-size: 0.85rem;
   box-shadow: var(--shadow-lg);
   animation: fadeInOut 2s ease forwards;
 }
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translateY(12px); }
-  10% { opacity: 1; transform: none; }
-  90% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(12px); }
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  10% {
+    opacity: 1;
+    transform: none;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
 }
 
 /* Reveal Animation */
-.reveal { opacity:0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.in { opacity:1; transform:none; }
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -264,9 +323,27 @@ header h1 {
     flex-direction: column;
     align-items: flex-start;
   }
-  #lessonMenu {
-    position: static;
-    box-shadow: none;
-    width: 100%;
-  }
+
+}
+
+@media(max-width:900px){
+
+.lesson-menu{
+
+    width:100%;
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:600px){
+
+.lesson-menu{
+
+    grid-template-columns:1fr;
+
+}
+
 }
