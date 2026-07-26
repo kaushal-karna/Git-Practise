@@ -1,6 +1,6 @@
-# Windows
+# OS
+.DS_Store
 Thumbs.db
-Desktop.ini
 
 # VS Code
 .vscode/
@@ -8,8 +8,9 @@ Desktop.ini
 # Logs
 *.log
 
-# Temporary files
-*.tmp
+# Node
+node_modules/
 
-# macOS
-.DS_Store
+# Python
+__pycache__/
+*.pyc
